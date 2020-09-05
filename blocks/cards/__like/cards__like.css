@@ -1,0 +1,8 @@
+.cards__like {
+    width: 21px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    margin: 7px 7px 0 15px;
+    cursor: pointer;
+}
