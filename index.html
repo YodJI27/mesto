@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,60 +8,61 @@
 </head>
 <body class="page">
     <header class="header">
-        <img class="header__logo" src="./images/logo (2).png" alt="Логотип Место">
-        <div class="line"></div>
+        <img class="header__logo" src="./images/logo.svg" alt="Логотип Место">
     </header>
     <main class="main">
         <section class="profile">
-            <img class="profile__image" src="./images/image (1).png" alt="Жак-Ив Кусто">
+            <img class="profile__image" src="./images/icon.png" alt="Жак-Ив Кусто">
             <div class="profile__info">
-                <p class="profile__author">Жак-Ив Кусто</p>
+                <div class="profile__button">
+                    <h1 class="profile__author">Жак-Ив Кусто</h1>
+                    <button class="profile__edit profile__edit_open_popup" type="submit"></button>
+                </div>
                 <p class="profile__description">Исследователь океана</p>
-                <button class="profile__edit js-menu__open-popup"></button>
             </div>
-            <button class="profile__add">+</button>
+            <button class="profile__add"></button>
         </section>
         <section class="cards">
             <div class="cards__item">
                 <img class="cards__image" src="./images/1.jpg" alt="Остров Мариета">
                 <div class="cards__info">
-                    <p class="cards__text">Остров Мариета</p>
-                    <img class="cards__like" src="./images/like.png" alt="like">
+                    <h2 class="cards__text">Остров Мариета</h2>
+                    <button class="cards__like"></button>
                 </div>
             </div>
             <div class="cards__item">
-                <img class="cards__image" src="./images/2 (2).png" alt="Домбй">
+                <img class="cards__image" src="./images/2.png" alt="Домбй">
                 <div class="cards__info">
-                    <p class="cards__text">Домбай</p>
-                <img class="cards__like" src="./images/like.png" alt="like">
+                    <h2 class="cards__text">Домбай</h2>
+                    <button class="cards__like"></button>
                 </div>
             </div>
             <div class="cards__item">
                 <img class="cards__image" src="./images/3.png" alt="Эльбрус">
                 <div class="cards__info">
-                    <p class="cards__text">Эльбрус</p>
-                    <img class="cards__like" src="./images/like.png" alt="like">
+                    <h2 class="cards__text">Эльбрус</h2>
+                    <button class="cards__like"></button>
                 </div>
             </div>
             <div class="cards__item">
                 <img class="cards__image" src="./images/4.png" alt="Карачаевск">
                 <div class="cards__info">
-                    <p class="cards__text">Карачаевск</p>
-                    <img class="cards__like" src="./images/like.png" alt="like">
+                    <h2 class="cards__text">Карачаевск</h2>
+                    <button class="cards__like"></button>
                 </div>
             </div>
             <div class="cards__item">
                 <img class="cards__image" src="./images/5.jpg" alt="Озеро Гарда">
                 <div class="cards__info">
-                    <p class="cards__text">Озеро Гарда</p>
-                    <img class="cards__like" src="./images/like.png" alt="like">
+                    <h2 class="cards__text">Озеро Гарда</h2>
+                    <button class="cards__like"></button>
                 </div>
             </div>
             <div class="cards__item">
                 <img class="cards__image" src="./images/6.png" alt="Водопад Мардалсфоссен">
                 <div class="cards__info">
-                    <p class="cards__text">Водопад Мардалсфоссен</p>
-                    <img class="cards__like" src="./images/like.png" alt="like"> 
+                    <h2 class="cards__text">Водопад Мардалсфоссен</h2>
+                    <button class="cards__like"></button> 
                 </div>
             </div>
         </section>
@@ -70,13 +71,11 @@
         <p class="footer__author">&copy;2020. Илья Шнырев</p>
     </footer>
     <section class="popup">
-        <form method="POST" class="popup__container">
-            <p class="popup__heading">Редактировать профиль</p>
-            <input type="text" name="nameInput" class="popup__text js-menu__name-input" value="Жак-Ив Кусто">
-            <div class="popup__line"></div>
-            <input type="text" name="jobInput" class="popup__text js-menu__job-input" value="Исследователь океана">
-            <div class="popup__line"></div>
-            <button type="button" class="popup__button">Сохранить</button>
+        <form method="POST" class="popup__container" name="popupForm">
+            <h2 class="popup__heading">Редактировать профиль</h2>
+            <input type="text" name="nameI" class="popup__text popup__text_name_input" value="Жак-Ив Кусто">
+            <input type="text" name="job" class="popup__text popup__text_job_input" value="Исследователь океана">
+            <button type="submit" class="popup__button">Сохранить</button>
             <button type="button" class="popup__close"></button>
         </form>
     </section>

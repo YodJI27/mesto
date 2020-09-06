@@ -14,3 +14,10 @@
     margin: 35px 0 54px 35px;
     z-index: 2;
 }
+@media screen and (max-width: 549px)
+{
+    .popup__heading {
+        margin-left: 10px;
+        font-size: 19px;
+    }
+}

@@ -5,6 +5,7 @@
     -ms-text-size-adjust: 100%;
     -moz-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    width: 90%;
     font-family: Inter, 'Arial', 'Helvetica';
     font-style: normal;
     font-weight: 900;
