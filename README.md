@@ -28,7 +28,7 @@
 
 **Cайт**
  
-[Ссылка на сайт](https://yodji27.github.io/mesto/index.html)
+[Ссылка на сайт](https://yodji27.github.io/mesto/)
  
 **Автор**  
 Илья Шнырев  
