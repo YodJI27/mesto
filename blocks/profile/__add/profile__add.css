@@ -12,7 +12,18 @@
     background: #000000;
     cursor: pointer;
     transition: opacity .5s linear;
+    padding: 0;
 }
 .profile__add:hover {
     opacity: 0.6;
+}
+
+@media screen and (max-width: 929px)
+{
+    .profile__add {
+        max-width: 500px;
+        min-width: 282px;
+        margin: 0 auto;
+        margin-top: 35px;
+    }
 }

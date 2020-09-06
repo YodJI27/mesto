@@ -1,7 +1,13 @@
 .popup__text {
     width: 100%;
     max-width: 360px;
-    font-family: Inter;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    font-family: Inter, 'Arial', 'Helvetica';
     font-style: normal;
     font-weight: normal;
     font-size: 14px;
