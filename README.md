@@ -11,7 +11,7 @@
  Так же присутствует возможно редактирования профиля.
 
 **Применяемые технологии:**
-1) HTML5,CSS3, JS
+1) HTML5,CSS3, JS ES6
 2) Grid
 3) Flex
 4) БЭМ Nested
@@ -28,7 +28,7 @@
 
 **Cайт**
  
-[Ссылка на сайт](https://yodji27.github.io/mesto/index.html)
+[Ссылка на сайт](https://yodji27.github.io/mesto/)
  
 **Автор**  
 Илья Шнырев  
