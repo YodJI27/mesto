@@ -11,12 +11,15 @@ let jobAuthor = document.querySelector('.profile__description');
 // открытие закрытие попап
 const popupAdd = function() {
 
-    popup.classList.add('popup__is_opened');
+    popup.classList.add('popup_opened');
+
+    nameInput.value = nameAuthor.textContent;
+    jobInput.value = jobAuthor.textContent;
 }
 const popupClose = function() {
-    popup.classList.remove('popup__is_opened');
-}
 
+    popup.classList.remove('popup_opened');
+}
 // -----------------------
 
 // Заполнение формы
@@ -35,7 +38,5 @@ function formSubmitHandler (evt) {
 // ---------------------
 openButtonPopup.addEventListener('click', popupAdd);
 popupButtonClose.addEventListener('click', popupClose);
-popupSaveButton.addEventListener('submit', popupClose);
-popupSaveButton.addEventListener('click', formSubmitHandler);
 formElement.addEventListener('submit', formSubmitHandler);
 
