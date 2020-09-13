@@ -60,13 +60,23 @@ const templateCards = function() {
 const popupAddCards = function()
 {
     popup.classList.add('popup_opened');
+    formElement.addEventListener('submit', addCardHandler);
     popupHeading.textContent = 'Новое место';
+}
+
+
+const addCardHandler = function(evt)
+{
+    evt.preventDefault();
+    popupClose();
+    console.log('Привет привет привет');
 }
 
 // открытие попан для редактирования профиля
 const popupAdd = function() {
 
     popup.classList.add('popup_opened');
+    formElement.addEventListener('submit', formSubmitHandler);
     popupHeading.textContent = 'Редактировать профиль';
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
@@ -75,10 +85,9 @@ const popupClose = function() {
 
     popup.classList.remove('popup_opened');
 }
-// -----------------------
 
 // Заполнение формы
-function formSubmitHandler (evt) {
+const formSubmitHandler =  function(evt) {
 
     evt.preventDefault();
 
@@ -96,5 +105,4 @@ templateCards();
 openButtonPopupAdd.addEventListener('click', popupAddCards);
 openButtonPopup.addEventListener('click', popupAdd);
 popupButtonClose.addEventListener('click', popupClose);
-formElement.addEventListener('submit', formSubmitHandler);
 
