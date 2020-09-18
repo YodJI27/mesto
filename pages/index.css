@@ -28,4 +28,10 @@
 @import url("../blocks/profile/__button/profile__button.css");
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/cards/__like/_active/cards__like_active.css");
-
+@import url("../blocks/cards/__delete/cards__delete.css");
+@import url("../blocks/photo/photo.css");
+@import url('../blocks/photo/_open/photo_open.css');
+@import url("../blocks/photo/__text/photo__text.css");
+@import url("../blocks/photo/__image/photo__image.css");
+@import url("../blocks/photo/__close/photo__close.css");
+@import url('../blocks/photo/__container/photo__container.css');

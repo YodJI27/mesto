@@ -17,6 +17,7 @@
     cursor: pointer;
     transition: opacity .5s linear;
     padding: 0;
+    outline: none;
 }
 .profile__add:hover {
     opacity: 0.6;

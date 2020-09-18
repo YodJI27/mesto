@@ -1,4 +1,4 @@
-.popup__close {
+.photo__close {
     background-image: url("../../../images/close.svg");
     background-position: center;
     background-size: cover;
@@ -11,8 +11,7 @@
     border: none;
     cursor: pointer;
     transition: opacity .5s linear;
-    outline: none;
 }
-.popup__close:hover {
+.photo__close:hover {
     opacity: 0.6;
 }

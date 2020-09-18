@@ -10,6 +10,7 @@
     margin-top: 7px;
     cursor: pointer;
     border: none;
+    outline: none;
     transition: opacity .5s linear;
 }
 .cards__like:hover {
