@@ -48,34 +48,46 @@ const initialCards = [
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
 ];
+initialCards.reverse();
 
 // добавление карточки из попап 
+// const addCardHandler = (evt) => {
+//     evt.preventDefault();
+
+//     const cardsElement = cardsTemplate.cloneNode(true);
+
+//     const cardsImage = cardsElement.querySelector('.cards__image');
+//     const cardsText = cardsElement.querySelector('.cards__text');
+
+//     cardsText.textContent = popupNameCards.value;
+//     cardsImage.src = popupJobCards.value;
+//     cardsImage.alt = popupNameCards.value;
+
+//     openCards(cardsElement);
+//     clickLike(cardsElement);
+//     deleteCards(cardsElement);
+//     prenendCards(cardsElement);
+//     closePopupCard();
+// }
+
+
+// Добавление карточки в массив
 const addCardHandler = (evt) => {
     evt.preventDefault();
 
-    const cardsElement = cardsTemplate.cloneNode(true);
-
-    const cardsImage = cardsElement.querySelector('.cards__image');
-    const cardsText = cardsElement.querySelector('.cards__text');
-
-    cardsText.textContent = popupNameCards.value;
-    cardsImage.src = popupJobCards.value;
-    cardsImage.alt = popupNameCards.value;
-
-    openCards(cardsElement);
-    clickLike(cardsElement);
-    deleteCards(cardsElement);
-    prenendCards(cardsElement);
+    const cardsValue = { name: popupNameCards.value, link: popupJobCards.value};
+    templateCards(cardsValue);
     closePopupCard();
+
 }
 
 // Заполнение формы для редактирования
-const formSubmitHandler =  (evt) => {
+const formSubmitHandler = (evt) => {
 
     evt.preventDefault();
 
-    let nameInputValue = nameInput.value;
-    let jobInputValue = jobInput.value;
+    const nameInputValue = nameInput.value;
+    const jobInputValue = jobInput.value;
 
     nameAuthor.textContent = nameInputValue;
     jobAuthor.textContent = jobInputValue;
@@ -87,7 +99,7 @@ const formSubmitHandler =  (evt) => {
 const openCards = (val) =>
 {
     val.querySelector('.cards__image').addEventListener('click', function(evt){
-        photoCards.classList.add('photo_open');
+        openedPopup(photoCards, 'photo_open');
         photoImage.src = evt.target.src;
         textImage.textContent = evt.target.alt;
     });
@@ -100,7 +112,7 @@ const closeImagePhoto = () => {
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
-    openedPopup(popupCards);
+    openedPopup(popupCards, 'popup_opened');
     formCards.addEventListener('submit', addCardHandler);
     popupNameCards.value = "";
     popupJobCards.value = "";
@@ -134,14 +146,14 @@ const prenendCards = (val) => {
 
 // Открытие попан для редактирования профиля
 const addPopup = () => {
-    openedPopup(popup);
+    openedPopup(popup, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
     formElement.addEventListener('submit', formSubmitHandler);
 }
 // Открытие всех попап
-const openedPopup = (val) => {
-    val.classList.add('popup_opened');
+const openedPopup = (val, link) => {
+    val.classList.add(link);
 }
 
 // Закрытие попап для редактирования
@@ -155,8 +167,7 @@ const closedPopup = (val) => {
 }
 
 // Наполнение карточек и вывод их на страницу ( из массива )
-const templateCards = () => {
-    initialCards.forEach(function(item) { 
+const templateCards = (item) => { 
         const cardsElement = cardsTemplate.cloneNode(true);
 
         const cardsImage = cardsElement.querySelector('.cards__image');
@@ -169,11 +180,13 @@ const templateCards = () => {
         openCards(cardsElement);
         clickLike(cardsElement);
         deleteCards(cardsElement);
-        cardsContainer.append(cardsElement);
-    });
+        cardsContainer.prepend(cardsElement);
 }
 
-templateCards();
+const render = () => {
+    initialCards.forEach(templateCards);
+}
+render();
 closeCardsImage.addEventListener('click', closeImagePhoto);
 openButtonPopupAdd.addEventListener('click', addPopupCards);
 openButtonPopup.addEventListener('click', addPopup);
