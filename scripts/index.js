@@ -180,7 +180,7 @@ const templateCards = (item) => {
         openCards(cardsElement);
         clickLike(cardsElement);
         deleteCards(cardsElement);
-        cardsContainer.prepend(cardsElement);
+        prenendCards(cardsElement);
 }
 
 const render = () => {
