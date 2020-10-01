@@ -11,6 +11,7 @@ const jobAuthor = document.querySelector('.profile__description');
 const cardsItem = document.querySelector('.cards__item');
 const cardsContainer = document.querySelector('.cards');
 const popupHeading = document.querySelector('.popup__heading');
+const popupHeadingCards = document.querySelector('.popup__heading_cards_text');
 const formElement = document.querySelector('.popup__container');
 const photoCards = document.querySelector('.photo');
 const photoImage = document.querySelector('.photo__image');
@@ -21,6 +22,12 @@ const popupCards = document.querySelector('.popup_cards');
 const formCards = document.querySelector('.popup__container_cards_item');
 const popupNameCards = document.querySelector('.popup__text_name_cards');
 const popupJobCards = document.querySelector('.popup__text_job_cards')
+const popupButtonSave = document.querySelector('.popup__button_save_form');
+const popupButtonSaveButton = document.querySelector('.popup__button_form_save');
+const inputErrorName = document.getElementById(`name-input-error`);
+const inputErrorData = document.getElementById(`job-input-error`);
+const inputNameError = document.getElementById('input-name-error');
+const inputErrorUrl = document.getElementById('url-input-error');
 
 const initialCards = [
     {
@@ -49,27 +56,6 @@ const initialCards = [
     }
 ];
 initialCards.reverse();
-
-// добавление карточки из попап 
-// const addCardHandler = (evt) => {
-//     evt.preventDefault();
-
-//     const cardsElement = cardsTemplate.cloneNode(true);
-
-//     const cardsImage = cardsElement.querySelector('.cards__image');
-//     const cardsText = cardsElement.querySelector('.cards__text');
-
-//     cardsText.textContent = popupNameCards.value;
-//     cardsImage.src = popupJobCards.value;
-//     cardsImage.alt = popupNameCards.value;
-
-//     openCards(cardsElement);
-//     clickLike(cardsElement);
-//     deleteCards(cardsElement);
-//     prenendCards(cardsElement);
-//     closePopupCard();
-// }
-
 
 // Добавление карточки в массив
 const addCardHandler = (evt) => {
@@ -102,28 +88,39 @@ const openCards = (val) =>
         openedPopup(photoCards, 'photo_open');
         photoImage.src = evt.target.src;
         textImage.textContent = evt.target.alt;
+        document.addEventListener('keydown', keyHandler);
     });
+    
 }
 
 // Закрытие фото
 const closeImagePhoto = () => {
     photoCards.classList.remove('photo_open');
+    document.removeEventListener('keydown', keyHandler);
 }
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
     openedPopup(popupCards, 'popup_opened');
-    formCards.addEventListener('submit', addCardHandler);
+    popupButtonSave.classList.add('popup__button_active_not');
+    popupButtonSave.disabled = true;
     popupNameCards.value = "";
     popupJobCards.value = "";
+    formCards.addEventListener('submit', addCardHandler);
+    document.addEventListener('keydown', keyHandler);
 }
 
 // Закрытие попап для карточек
 const closePopupCard = () => {
     formCards.removeEventListener('submit', addCardHandler);
+    document.removeEventListener('keydown', keyHandler);
+    inputNameError.textContent = "";
+    inputErrorUrl.textContent = "";
+    popupJobCards.classList.remove('popup__text_name_error');
+    popupNameCards.classList.remove('popup__text_name_error');
     closedPopup(popupCards);
-}
 
+}
 
 // Лайк
 const clickLike = (val) => {
@@ -149,16 +146,25 @@ const addPopup = () => {
     openedPopup(popup, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
+
+    popupButtonSaveButton.classList.remove('popup__button_active_not');
+    popupButtonSaveButton.disabled = false;
+
     formElement.addEventListener('submit', formSubmitHandler);
+    document.addEventListener('keydown', keyHandler);
 }
 // Открытие всех попап
 const openedPopup = (val, link) => {
     val.classList.add(link);
 }
-
 // Закрытие попап для редактирования
 const popupClose = () => {
     formElement.removeEventListener('submit', formSubmitHandler);
+    document.removeEventListener('keydown', keyHandler);
+    inputErrorData.textContent = "";
+    inputErrorName.textContent = "";
+    nameInput.classList.remove('popup__text_name_error');
+    jobInput.classList.remove('popup__text_name_error');
     closedPopup(popup);
 }
 // Функция закрытия всех попап
@@ -187,6 +193,42 @@ const render = () => {
     initialCards.forEach(templateCards);
 }
 render();
+
+// document.addEventListener('keydown', function(evt){
+//     if(evt.key === 'Escape'){
+//         popupClose();
+//         closePopupCard();
+//         closeImagePhoto();
+//     }
+// });
+
+
+const keyHandler = (evt) => {
+    if(evt.key === 'Escape'){
+        popupClose();
+        closePopupCard();
+        closeImagePhoto();
+    }
+}
+popup.addEventListener('click', (evt) =>{
+    if(evt.target.classList.contains('popup')){   
+        popupClose();
+    }
+});
+popupCards.addEventListener('click', (evt) =>{
+    if(evt.target.classList.contains('popup_cards')){
+        closePopupCard();
+    }
+});
+photoCards.addEventListener('click', (evt) => {
+    if(evt.target.classList.contains('photo')){
+        closeImagePhoto();
+    }
+})
+
+formElement.addEventListener('submit', function(evt){
+    evt.preventDefault();
+});
 closeCardsImage.addEventListener('click', closeImagePhoto);
 openButtonPopupAdd.addEventListener('click', addPopupCards);
 openButtonPopup.addEventListener('click', addPopup);

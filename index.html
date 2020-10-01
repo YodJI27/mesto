@@ -41,18 +41,30 @@
     <section class="popup">
         <form method="POST" class="popup__container" name="popupForm">
             <h2 class="popup__heading">Редактировать профиль</h2>
-            <input type="text" name="name" class="popup__text popup__text_name_input">
-            <input type="text" name="job" class="popup__text popup__text_job_input">
-            <button type="submit" class="popup__button">Сохранить</button>
+            <label class="popup__label">
+                <input id="name-input" type="text" name="name" class="popup__text popup__text_name_input" required maxlength="40" minlength="2">
+                <span class="popup__error" id="name-input-error"></span>
+            </label>
+            <label class="popup__label">
+                <input id="job-input" type="text" name="job" class="popup__text popup__text_job_input" required maxlength="200" minlength="2">
+                <span class="popup__error" id="job-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button popup__button_form_save">Сохранить</button>
             <button type="reset" class="popup__close"></button>
         </form>
     </section>
     <section class="popup popup_cards">
         <form method="POST" class="popup__container popup__container_cards_item" name="popupForm">
-            <h2 class="popup__heading">Новое место</h2>
-            <input type="text" name="name" placeholder="Название" class="popup__text popup__text_name_cards">
-            <input type="text" name="job"  placeholder="Ссылка на картинку" class="popup__text popup__text_job_cards">
-            <button type="submit" class="popup__button">Сохранить</button>
+            <h2 class="popup__heading popup__heading_cards_text" >Новое место</h2>
+            <label class="popup__label">
+                <input type="text" id="input-name" name="name" placeholder="Название" class="popup__text popup__text_name_cards" required maxlength="30" minlength="2">
+                <span class="popup__error" id="input-name-error"></span>
+            </label>
+            <label class="popup__label">
+                <input type="url" id="url-input" name="job"  placeholder="Ссылка на картинку" class="popup__text popup__text_job_cards" required>
+                <span class="popup__error" id="url-input-error"></span>
+            </label>
+            <button type="submit" class="popup__button popup__button_save_form">Сохранить</button>
             <button type="reset" class="popup__close popup__close_cards_item"></button>
         </form>
     </section>
@@ -64,5 +76,6 @@
         </div>
     </section>
     <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
 </body>
 </html>
