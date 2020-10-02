@@ -3,9 +3,12 @@ allClasesCase = {
     popupText: '.popup__text',
     popupButton: '.popup__button',
     popupTextNameError: 'popup__text_name_error',
-    popupButonActive: 'popup__button_active_not'
+    popupButonActive: 'popup__button_active_not',
+    inputNameError: 'input-name-error',
+    inputUrlError: 'url-input-error'
 };
 
+ 
 // Добавление элемента ошибки
 const showInputError = (formElement, element, messageError, allClasses) => {
     const errorElement = formElement.querySelector(`#${element.id}-error`);
@@ -20,6 +23,24 @@ const hideInputError = (formElement, element, allClasses) => {
     element.classList.remove(allClasses.popupTextNameError);
     errorElement.textContent = "";
 }
+
+const buttonActive = (element) => {
+    element.classList.add(allClasesCase.popupButonActive);
+    element.disabled = true;
+}
+const buttonActiveFalse = (element) => {
+    element.classList.remove(allClasesCase.popupButonActive);
+    element.disabled = false;
+}
+
+const buttonClosed = (element) => {
+    element.classList.remove(allClasesCase.popupTextNameError);
+}
+
+const removeInputError = (element) => {
+    element.textContent = "";
+}
+
 
 // Проверка валидности поля 
 const isValid = (formElement, element, allClasses) => {
