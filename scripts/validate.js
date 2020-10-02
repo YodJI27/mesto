@@ -3,9 +3,7 @@ allClasesCase = {
     popupText: '.popup__text',
     popupButton: '.popup__button',
     popupTextNameError: 'popup__text_name_error',
-    popupButonActive: 'popup__button_active_not',
-    inputNameError: 'input-name-error',
-    inputUrlError: 'url-input-error'
+    popupButonActive: 'popup__button_active_not'
 };
 
  
