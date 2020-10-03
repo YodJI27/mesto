@@ -40,32 +40,24 @@ const isValid = (formElement, element, allClasses) => {
 }
 
 // Добавление класса кнопки ( активная / не активная)
-const toggleButtonState = (inputList, buttonElement, allClasses) => {
+const toggleButtonState = (inputList, buttonElement) => {
     const hasNotValidInput = inputList.some(
         (inputElement) => !inputElement.validity.valid
     );
     if(hasNotValidInput){
-        buttonActive(buttonElement, allClasses);
+        buttonActive(buttonElement);
     } else {
-        buttonFalse(buttonElement, allClasses);
+        buttonFalse(buttonElement);
     }
 }
-
- const buttonActiveTrue = (element) => {
-     element.classList.add(allClasesCase.popupButonActive);
-     element.disabled = true;
-}
-
-const buttonActive = (buttonElement, allClasses) => {
-    buttonElement.classList.add(allClasses.popupButonActive);
+const buttonActive = (buttonElement) => {
+    buttonElement.classList.add(allClasesCase.popupButonActive);
     buttonElement.setAttribute('disabled', true);
 }
-const buttonFalse = (buttonElement, allClasses) => {
-    buttonElement.classList.remove(allClasses.popupButonActive);
+const buttonFalse = (buttonElement) => {
+    buttonElement.classList.remove(allClasesCase.popupButonActive);
     buttonElement.removeAttribute('disabled');
 }
-
-
 
 // Добавление обработчика всем полям формы
 const setEventListener = (element, allClasses) => {
@@ -74,15 +66,12 @@ const setEventListener = (element, allClasses) => {
     inputList.forEach((item) => {
         item.addEventListener('input', function(){
             isValid(element, item, allClasses);
-            toggleButtonState(inputList, buttonInput, allClasses);
+            toggleButtonState(inputList, buttonInput);
         });
     });
-    toggleButtonState(inputList, buttonInput, allClasses);
+    toggleButtonState(inputList, buttonInput);
 }
-// popupButtonActiveFalse = (element) => {
-//     element.classList.remove(allClasesCase.popupButonActive);
-//     element.removeAttribute('disabled');
-// }
+
 // Добавление обработчика формам
 const  enableValidation = (allClasses) => {
     const formList = Array.from(document.querySelectorAll(allClasses.formSelector));

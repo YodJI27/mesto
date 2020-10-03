@@ -83,7 +83,7 @@ const openCards = (evt) =>
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
     openedPopup(popupCards, 'popup_opened');
-    buttonActiveTrue(popupButtonSave);
+    buttonActive(popupButtonSave);
     popupNameCards.value = "";
     popupJobCards.value = "";
     formCards.addEventListener('submit', addCardHandler);
@@ -140,19 +140,13 @@ const addPopup = () => {
     openedPopup(popup, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
+    buttonFalse(popupButtonSaveButton);
     formElement.addEventListener('submit', formSubmitHandler);
     document.addEventListener('keydown', keyHandler);
 }
 // Открытие всех попап
 const openedPopup = (val, link) => {
     val.classList.add(link);
-}
-// закрытие попап по нажатии на ESC
-const keyHandler = (evt) => {
-    if(evt.key === 'Escape'){
-        const OpenedPopupCheck = document.querySelector('.popup_opened');
-        closedPopup(OpenedPopupCheck);
-    }
 }
 
 // Наполнение карточек и вывод их на страницу ( из массива )
@@ -198,8 +192,15 @@ popup.addEventListener('click', (evt) =>{
         popupClose();
     }
 });
+const keyHandler = (evt) => {
+    if(evt.key === 'Escape'){
+        const OpenedPopupCheck = document.querySelector('.popup_opened');
+        closedPopup(OpenedPopupCheck);
+    }
+}
 // закрытие для карточек
 popupCards.addEventListener('click', (evt) =>{
+    keyHandler(evt);
     if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
         closePopupCard();
     }
