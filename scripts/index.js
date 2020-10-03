@@ -158,7 +158,9 @@ initialCards.reverse().forEach((item) => {
 
 // закрытие для редактирования
 popup.addEventListener('click', (evt) =>{
-    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){   
+    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){
+        formElement.removeEventListener('submit', formSubmitHandler); 
+        document.removeEventListener('keydown', keyHandler);    
         removeInputError(inputErrorData);
         removeInputError(inputErrorName);
         buttonClosed(nameInput);
@@ -172,10 +174,13 @@ const keyHandler = (evt) => {
         closedPopup(OpenedPopupCheck);
     }
 }
+console.log('123');
 // закрытие для карточек
 popupCards.addEventListener('click', (evt) =>{
     keyHandler(evt);
     if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
+        formCards.removeEventListener('submit', addCardHandler); 
+        document.removeEventListener('keydown', keyHandler);
         removeInputError(inputNameError);
         removeInputError(inputErrorUrl);
         buttonClosed(popupJobCards);
