@@ -79,11 +79,6 @@ const openCards = (evt) =>
     document.addEventListener('keydown', keyHandler);
 }
 
-// Закрытие фото
-const closeImagePhoto = () => {
-    photoCards.classList.remove('popup_opened');
-    document.removeEventListener('keydown', keyHandler);
-}
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
@@ -119,6 +114,16 @@ const popupClose = () => {
     closedPopup(popup);
 }
 
+// Закрытие фото
+const closeImagePhoto = () => {
+    document.removeEventListener('keydown', keyHandler);
+    closedPopup(photoCards);
+}
+
+// Функция закрытия всех попап
+const closedPopup = (val) => {
+    val.classList.remove('popup_opened');
+}
 
 // Удаление карточки
 const deleteCards = (evt) => {
@@ -135,17 +140,12 @@ const addPopup = () => {
     openedPopup(popup, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
-   // popupButtonActiveFalse(popupButtonSaveButton);
     formElement.addEventListener('submit', formSubmitHandler);
     document.addEventListener('keydown', keyHandler);
 }
 // Открытие всех попап
 const openedPopup = (val, link) => {
     val.classList.add(link);
-}
-// Функция закрытия всех попап
-const closedPopup = (val) => {
-    val.classList.remove('popup_opened');
 }
 // закрытие попап по нажатии на ESC
 const keyHandler = (evt) => {
