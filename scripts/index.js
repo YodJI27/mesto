@@ -67,7 +67,7 @@ const formSubmitHandler = (evt) => {
     nameAuthor.textContent = nameInputValue;
     jobAuthor.textContent = jobInputValue;
 
-    popupClose();
+    closedPopup(popup);
 }
 
 // Приближение изображения
@@ -88,36 +88,6 @@ const addPopupCards = () => {
     popupJobCards.value = "";
     formCards.addEventListener('submit', addCardHandler);
     document.addEventListener('keydown', keyHandler);
-}
-
-
-// Закрытие попап для карточек
-const closePopupCard = () => {
-    formCards.removeEventListener('submit', addCardHandler);
-    document.removeEventListener('keydown', keyHandler);
-    removeInputError(inputNameError);
-    removeInputError(inputErrorUrl);
-    buttonClosed(popupJobCards);
-    buttonClosed(popupNameCards);
-    closedPopup(popupCards);
-
-}
-
-// Закрытие попап для редактирования
-const popupClose = () => {
-    formElement.removeEventListener('submit', formSubmitHandler);
-    document.removeEventListener('keydown', keyHandler);
-    removeInputError(inputErrorData);
-    removeInputError(inputErrorName);
-    buttonClosed(nameInput);
-    buttonClosed(jobInput);
-    closedPopup(popup);
-}
-
-// Закрытие фото
-const closeImagePhoto = () => {
-    document.removeEventListener('keydown', keyHandler);
-    closedPopup(photoCards);
 }
 
 // Функция закрытия всех попап
@@ -178,7 +148,7 @@ const addCardHandler = (evt) => {
     const cardsValue = { name: popupNameCards.value, 
                          link: popupJobCards.value};
     prenendCards(cardsContainer, templateCards(cardsValue));
-    closePopupCard();
+    closedPopup(popupCards);
 
 }
 // перебор массива
@@ -189,7 +159,11 @@ initialCards.reverse().forEach((item) => {
 // закрытие для редактирования
 popup.addEventListener('click', (evt) =>{
     if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){   
-        popupClose();
+        removeInputError(inputErrorData);
+        removeInputError(inputErrorName);
+        buttonClosed(nameInput);
+        buttonClosed(jobInput);
+        closedPopup(popup);
     }
 });
 const keyHandler = (evt) => {
@@ -202,13 +176,17 @@ const keyHandler = (evt) => {
 popupCards.addEventListener('click', (evt) =>{
     keyHandler(evt);
     if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
-        closePopupCard();
+        removeInputError(inputNameError);
+        removeInputError(inputErrorUrl);
+        buttonClosed(popupJobCards);
+        buttonClosed(popupNameCards);
+        closedPopup(popupCards);
     }
 });
 // закрытие для фото
 photoCards.addEventListener('click', (evt) => {
     if(evt.target.classList.contains('photo') || evt.target.classList.contains('photo__close')){
-        closeImagePhoto();
+        closedPopup(photoCards);
     }
 })
 
