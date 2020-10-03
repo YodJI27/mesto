@@ -23,16 +23,6 @@ const hideInputError = (formElement, element, allClasses) => {
     element.classList.remove(allClasses.popupTextNameError);
     errorElement.textContent = "";
 }
-
-const buttonActive = (element) => {
-    element.classList.add(allClasesCase.popupButonActive);
-    element.disabled = true;
-}
-const buttonActiveFalse = (element) => {
-    element.classList.remove(allClasesCase.popupButonActive);
-    element.disabled = false;
-}
-
 const buttonClosed = (element) => {
     element.classList.remove(allClasesCase.popupTextNameError);
 }
@@ -57,13 +47,26 @@ const toggleButtonState = (inputList, buttonElement, allClasses) => {
         (inputElement) => !inputElement.validity.valid
     );
     if(hasNotValidInput){
-        buttonElement.classList.add(allClasses.popupButonActive);
-        buttonElement.setAttribute('disabled', true);
+        buttonActive(buttonElement, allClasses);
     } else {
-        buttonElement.classList.remove(allClasses.popupButonActive);
-        buttonElement.removeAttribute('disabled');
+        buttonFalse(buttonElement, allClasses);
     }
 }
+
+ const buttonActiveTrue = (element) => {
+     element.classList.add(allClasesCase.popupButonActive);
+     element.disabled = true;
+}
+
+const buttonActive = (buttonElement, allClasses) => {
+    buttonElement.classList.add(allClasses.popupButonActive);
+    buttonElement.setAttribute('disabled', true);
+}
+const buttonFalse = (buttonElement, allClasses) => {
+    buttonElement.classList.remove(allClasses.popupButonActive);
+    buttonElement.removeAttribute('disabled');
+}
+
 
 
 // Добавление обработчика всем полям формы
@@ -78,14 +81,19 @@ const setEventListener = (element, allClasses) => {
     });
     toggleButtonState(inputList, buttonInput, allClasses);
 }
-
+// popupButtonActiveFalse = (element) => {
+//     element.classList.remove(allClasesCase.popupButonActive);
+//     element.removeAttribute('disabled');
+// }
 // Добавление обработчика формам
 const  enableValidation = (allClasses) => {
     const formList = Array.from(document.querySelectorAll(allClasses.formSelector));
+    const buttonInput = document.querySelector(allClasses.popupButton);
     formList.forEach((item) => {
         item.addEventListener('submit', (evt) => {
             evt.preventDefault();
         })
+        buttonFalse(buttonInput, allClasses);
         setEventListener(item, allClasses);
     });
 }

@@ -88,7 +88,7 @@ const closeImagePhoto = () => {
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
     openedPopup(popupCards, 'popup_opened');
-    buttonActive(popupButtonSave);
+    buttonActiveTrue(popupButtonSave);
     popupNameCards.value = "";
     popupJobCards.value = "";
     formCards.addEventListener('submit', addCardHandler);
@@ -135,9 +135,7 @@ const addPopup = () => {
     openedPopup(popup, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
-
-    buttonActiveFalse(popupButtonSaveButton);
-
+   // popupButtonActiveFalse(popupButtonSaveButton);
     formElement.addEventListener('submit', formSubmitHandler);
     document.addEventListener('keydown', keyHandler);
 }
