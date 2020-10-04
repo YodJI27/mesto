@@ -76,7 +76,6 @@ const openCards = (evt) =>
     openedPopup(photoCards, 'popup_opened');
     photoImage.src = evt.target.src;
     textImage.textContent = evt.target.alt;
-    document.addEventListener('keydown', keyHandler);
 }
 
 
@@ -87,12 +86,12 @@ const addPopupCards = () => {
     popupNameCards.value = "";
     popupJobCards.value = "";
     formCards.addEventListener('submit', addCardHandler);
-    document.addEventListener('keydown', keyHandler);
 }
 
 // Функция закрытия всех попап
 const closedPopup = (val) => {
     val.classList.remove('popup_opened');
+    document.removeEventListener('keydown', keyHandler);
 }
 
 // Удаление карточки
@@ -112,11 +111,11 @@ const addPopup = () => {
     jobInput.value = jobAuthor.textContent;
     buttonFalse(popupButtonSaveButton);
     formElement.addEventListener('submit', formSubmitHandler);
-    document.addEventListener('keydown', keyHandler);
 }
 // Открытие всех попап
 const openedPopup = (val, link) => {
     val.classList.add(link);
+    document.addEventListener('keydown', keyHandler);
 }
 
 // Наполнение карточек и вывод их на страницу ( из массива )
@@ -159,8 +158,7 @@ initialCards.reverse().forEach((item) => {
 // закрытие для редактирования
 popup.addEventListener('click', (evt) =>{
     if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){
-        formElement.removeEventListener('submit', formSubmitHandler); 
-        document.removeEventListener('keydown', keyHandler);    
+        formElement.removeEventListener('submit', formSubmitHandler);     
         removeInputError(inputErrorData);
         removeInputError(inputErrorName);
         buttonClosed(nameInput);
@@ -174,13 +172,11 @@ const keyHandler = (evt) => {
         closedPopup(OpenedPopupCheck);
     }
 }
-console.log('123');
 // закрытие для карточек
 popupCards.addEventListener('click', (evt) =>{
     keyHandler(evt);
     if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
         formCards.removeEventListener('submit', addCardHandler); 
-        document.removeEventListener('keydown', keyHandler);
         removeInputError(inputNameError);
         removeInputError(inputErrorUrl);
         buttonClosed(popupJobCards);
@@ -194,10 +190,6 @@ photoCards.addEventListener('click', (evt) => {
         closedPopup(photoCards);
     }
 })
-
-formElement.addEventListener('submit', function(evt){
-    evt.preventDefault();
-});
 
 openButtonPopupAdd.addEventListener('click', addPopupCards);
 openButtonPopup.addEventListener('click', addPopup);
