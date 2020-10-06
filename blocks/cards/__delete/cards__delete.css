@@ -3,7 +3,7 @@
     background-color: transparent;
     border: none;
     outline: none;
-    background-size: cover;
+    background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
     cursor: pointer;
