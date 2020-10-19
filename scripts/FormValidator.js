@@ -1,9 +1,7 @@
 
-
-export class formValidator {
+export class FormValidator {
     constructor(formSelector, allClasses){
-        this._formSelector = formSelector;
-        this._formElement = document.querySelector(formSelector);
+        this._formSelector = document.querySelector(formSelector);
         this._popupText = allClasses.popupText;
         this._popupButton = allClasses.popupButton;
         this._popupTextNameError = allClasses.popupTextNameError;
@@ -22,6 +20,11 @@ export class formValidator {
         element.classList.remove(this._popupTextNameError);
         errorElement.textContent = "";
     }
+    // Удаление текста ошибки при закрытии попапов
+    removeError(element, text){
+        text.textContent = "";
+        element.classList.remove(this._popupTextNameError);
+    }
 
     // Проверка валидности поля 
     _isValid(formElement, element){
@@ -31,27 +34,29 @@ export class formValidator {
             this._hideInputError(formElement, element);
         }
     }
+    // Проверка валидности
+    _hasNotValidInput(inputList){
+        return inputList.some((inputElement) => !inputElement.validity.valid);
+    }
 
     // Добавление класса кнопки ( активная / не активная)
     _toggleButtonState(inputList, buttonElement){
-        const hasNotValidInput = inputList.some(
-            (inputElement) => !inputElement.validity.valid
-        );
-        if(hasNotValidInput){
-            this._buttonActive(buttonElement);
+        if(this._hasNotValidInput(inputList)){
+            this.buttonActive(buttonElement);
         } else {
-            this._buttonFalse(buttonElement);
+            this.buttonFalse(buttonElement);
         }
     }
-    _buttonActive(buttonElement){
+
+    buttonActive(buttonElement){
         buttonElement.classList.add(this._popupButonActive);
         buttonElement.setAttribute('disabled', true);
     }
-    _buttonFalse(buttonElement){
+
+    buttonFalse(buttonElement){
         buttonElement.classList.remove(this._popupButonActive);
         buttonElement.removeAttribute('disabled');
     }
-
 
     // Добавление обработчика всем полям формы
     _setEventListener(element){
@@ -69,10 +74,10 @@ export class formValidator {
     // Добавление обработчика формам
     enableValidation(){
         const buttonInput = document.querySelector(this._popupButton);
-            this._formElement.addEventListener('submit', (evt) => {
+        this._formSelector.addEventListener('submit', (evt) => {
                 evt.preventDefault();
             })
-        this._buttonFalse(buttonInput);
-        this._setEventListener(this._formElement);
+        this.buttonFalse(buttonInput);
+        this._setEventListener(this._formSelector);
     }
 }

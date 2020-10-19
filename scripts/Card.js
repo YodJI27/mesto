@@ -34,12 +34,14 @@ export class Card {
     // Удаление карточки
     _deleteCards(){
         this._element.remove();
+        this._element = null;
     }
     // Приближение изображения
     _openCards(){
         openedPopup(photoCards, 'popup_opened');
         const cardsImage = this._element.querySelector('.cards__image');
         photoImage.src = cardsImage.src;
+        photoImage.alt = cardsImage.alt;
         textImage.textContent = cardsImage.alt;
     }
     // Добавление всех обработчиков карточки
