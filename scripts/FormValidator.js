@@ -8,15 +8,15 @@ export class FormValidator {
         this._popupButonActive = allClasses.popupButonActive;
     }
     // Добавление элемента ошибки
-    _showInputError(formElement, element, messageError){
-        const errorElement = formElement.querySelector(`#${element.id}-error`);
+    _showInputError(element, messageError){
+        const errorElement = this._formSelector.querySelector(`#${element.id}-error`);
         element.classList.add(this._popupTextNameError);
         errorElement.textContent = messageError;
     }
 
     // Скрытие элемента ошибки
-    _hideInputError(formElement, element){
-        const errorElement = formElement.querySelector(`#${element.id}-error`);
+    _hideInputError(element){
+        const errorElement = this._formSelector.querySelector(`#${element.id}-error`);
         element.classList.remove(this._popupTextNameError);
         errorElement.textContent = "";
     }
@@ -29,9 +29,9 @@ export class FormValidator {
     // Проверка валидности поля 
     _isValid(formElement, element){
         if(!element.validity.valid){
-            this._showInputError(formElement, element, element.validationMessage);
+            this._showInputError(element, element.validationMessage);
         } else {
-            this._hideInputError(formElement, element);
+            this._hideInputError(element);
         }
     }
     // Проверка валидности

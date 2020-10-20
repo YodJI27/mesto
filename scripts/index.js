@@ -11,7 +11,7 @@ const allClasesCase = {
     popupButonActive: 'popup__button_active_not'
 };
 
-const popup = document.querySelector('.popup');
+const popupEdit = document.querySelector('.popup');
 const openButtonPopup = document.querySelector('.profile__edit_open_popup');
 const openButtonPopupAdd = document.querySelector('.profile__add');
 const nameInput = document.querySelector('.popup__text_name_input');
@@ -47,7 +47,7 @@ const addFormSubmitHandler = (evt) => {
     nameAuthor.textContent = nameInputValue;
     jobAuthor.textContent = jobInputValue;
 
-    closedPopup(popup);
+    closedPopup(popupEdit);
 }
 
 // Открытие попап для добавления карточек
@@ -67,7 +67,7 @@ const closedPopup = (val) => {
 
 // Открытие попан для редактирования профиля
 const addPopup = () => {
-    openedPopup(popup, 'popup_opened');
+    openedPopup(popupEdit, 'popup_opened');
     nameInput.value = nameAuthor.textContent;
     jobInput.value = jobAuthor.textContent;
     validateEdit.buttonFalse(popupButtonSaveButton);
@@ -105,18 +105,18 @@ initialCards.reverse().forEach((item) => {
 })
 
 // закрытие для редактирования
-popup.addEventListener('click', (evt) =>{
+popupEdit.addEventListener('click', (evt) =>{
     if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){
         formElement.removeEventListener('submit', addFormSubmitHandler);     
         validateEdit.removeError(nameInput, inputErrorData);
         validateEdit.removeError(jobInput, inputErrorName);
-        closedPopup(popup);
+        closedPopup(popupEdit);
     }
 });
 const keyHandler = (evt) => {
     if(evt.key === 'Escape'){
-        const OpenedPopupCheck = document.querySelector('.popup_opened');
-        closedPopup(OpenedPopupCheck);
+        const openedPopupCheck = document.querySelector('.popup_opened');
+        closedPopup(openedPopupCheck);
     }
 }
 // закрытие для карточек
