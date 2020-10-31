@@ -1,10 +1,9 @@
-import {openedPopup, photoCards, photoImage, textImage} from './index.js';
-
 export class Card {
-    constructor(data, template){
-        this._name = data.name;
-        this._link = data.link;
+    constructor({item, handleCardClick}, template){
+        this._name = item.name;
+        this._link = item.link;
         this._template = template;
+        this._handleCardClick = handleCardClick;
     }
 
     _getTemplate(){
@@ -36,14 +35,6 @@ export class Card {
         this._element.remove();
         this._element = null;
     }
-    // Приближение изображения
-    _openCards(){
-        openedPopup(photoCards, 'popup_opened');
-        const cardsImage = this._element.querySelector('.cards__image');
-        photoImage.src = cardsImage.src;
-        photoImage.alt = cardsImage.alt;
-        textImage.textContent = cardsImage.alt;
-    }
     // Добавление всех обработчиков карточки
     _setEventListener(){
         this._element.querySelector('.cards__like').addEventListener('click', () =>{
@@ -53,7 +44,7 @@ export class Card {
             this._deleteCards();
         })
         this._element.querySelector('.cards__image').addEventListener('click', () =>{
-            this._openCards();
+            this._handleCardClick();
         })
     }
 }

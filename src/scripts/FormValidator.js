@@ -27,7 +27,7 @@ export class FormValidator {
     }
 
     // Проверка валидности поля 
-    _isValid(formElement, element){
+    _isValid(element){
         if(!element.validity.valid){
             this._showInputError(element, element.validationMessage);
         } else {
@@ -64,7 +64,7 @@ export class FormValidator {
         const buttonInput = element.querySelector(this._popupButton);
         inputList.forEach((item) => {
             item.addEventListener('input', () =>{
-                this._isValid(element, item);
+                this._isValid(item);
                 this._toggleButtonState(inputList, buttonInput);
             });
         });

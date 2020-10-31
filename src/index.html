@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto</title>
 </head>
 <body class="page">
@@ -25,7 +24,7 @@
         <section class="cards">
             <template id="cards__template">
                 <div class="cards__item">
-                    <img class="cards__image" src="" alt="">
+                    <img class="cards__image" src="#" alt="">
                     <button class="cards__delete" type="button"></button>
                     <div class="cards__info">
                         <h2 class="cards__text"></h2>
@@ -38,7 +37,7 @@
     <footer class="footer">
         <p class="footer__author">&copy;2020. Илья Шнырев</p>
     </footer>
-    <section class="popup">
+    <section class="popup" id='edit__popup'>
         <form method="POST" class="popup__container" name="popupForm">
             <h2 class="popup__heading">Редактировать профиль</h2>
             <label class="popup__label">
@@ -53,7 +52,8 @@
             <button type="reset" class="popup__close"></button>
         </form>
     </section>
-    <section class="popup popup_cards">
+    
+    <section class="popup popup_cards" id="cards__popup">
         <form method="POST" class="popup__container popup__container_cards_item" name="popupForm">
             <h2 class="popup__heading popup__heading_cards_text" >Новое место</h2>
             <label class="popup__label">
@@ -61,7 +61,7 @@
                 <span class="popup__error" id="input-name-error"></span>
             </label>
             <label class="popup__label">
-                <input type="url" id="url-input" name="job"  placeholder="Ссылка на картинку" class="popup__text popup__text_job_cards" required>
+                <input type="url" id="url-input" name="link"  placeholder="Ссылка на картинку" class="popup__text popup__text_job_cards" required>
                 <span class="popup__error" id="url-input-error"></span>
             </label>
             <button type="submit" class="popup__button popup__button_save_form">Сохранить</button>
@@ -70,11 +70,10 @@
     </section>
     <section class="popup photo">
         <div class="photo__container">
-            <img class="photo__image" src="" alt="">
+            <img class="photo__image" src="#" alt="">
             <p class="photo__text"></p>
             <button type="reset" class="popup__close photo__close"></button>
         </div>
     </section>
-    <script type="module" src="./scripts/index.js" defer></script>
 </body>
 </html>
