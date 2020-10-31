@@ -4,7 +4,7 @@
   "description": "Интерактивная страница, куда можно добавлять фотографии, удалять их и ставить лайки. Присутствует редактирование профиля, вы можете вписать туда свое имя и род деятельности.",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --mode production",
+    "build": "rm -rf dist && webpack --mode production",
     "dev": "webpack-dev-server"
   },
   "repository": {
