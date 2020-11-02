@@ -1,26 +1,24 @@
 import '../pages/index.css';
-import { Card } from './Card.js';
-import { FormValidator } from './FormValidator.js';
-import { initialCards } from './initialCards.js';
-import { Popup } from './Popup.js';
-import { PopupWithForm } from './PopupWithForm.js';
-import { PopupWithImage } from './PopupWithImage.js';
-import { Section } from './Section.js';
-import { UserInfo } from './UserInfo.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
+import { initialCards } from '../components/initialCards.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithImage } from '../components/PopupWithImage.js';
+import { Section } from '../components/Section.js';
+import { UserInfo } from '../components/UserInfo.js';
 import {photoCards, inputErrorUrl, inputNameError,
         inputErrorData, inputErrorName, popupButtonSaveButton,
         popupButtonSave, popupJobCards, popupNameCards,
-        popupCards, formElement, jobInput, nameInput,
+        popupCards, jobInput, nameInput,
         openButtonPopupAdd, openButtonPopup, popupEdit, 
-        allClasesCase} from './constants.js';
+        allClasesCase, textImage, photoImage} from '../components/constants.js';
 
 // Создание класса для редактирования профиля
 const editInfoUser = new UserInfo({nameSelector: '.profile__author', jobSelector: '.profile__description'});
-const editPopupClass = new Popup('.popup');
+const editPopupClass = new PopupWithForm('.popup', () => {addFormSubmitHandler();});
 
 // Заполнение формы для редактирования
-const addFormSubmitHandler = (evt) => {
-    evt.preventDefault();
+const addFormSubmitHandler = () => {
     editInfoUser.setUserInfo(nameInput.value, jobInput.value);
     editPopupClass.close();
 }
@@ -37,13 +35,11 @@ const addPopup = () => {
     jobInput.value = editInfoUser.getUserInfo().job;
     editPopupClass.open();
     validateEdit.buttonFalse(popupButtonSaveButton);
-    formElement.addEventListener('submit', addFormSubmitHandler);
 }
 
 // закрытие для редактирования
 popupEdit.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){
-        formElement.removeEventListener('submit', addFormSubmitHandler);     
+    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){    
         validateEdit.removeError(nameInput, inputErrorData);
         validateEdit.removeError(jobInput, inputErrorName);
         editPopupClass.close();
@@ -74,18 +70,18 @@ const renderer = (item) => {
     }   
     }, '#cards__template');
     const cardsElement = card.generateCard();
-    cardsDone.addItem(cardsElement);
+    cardsSection.addItem(cardsElement);
 }
 
 // Добавление карточек из попап
 const formPopup = new PopupWithForm('#cards__popup', (item) => {renderer(item);});
 
 // Приближение картинки
-const cardsImage = new PopupWithImage('.photo');
+const cardsImage = new PopupWithImage('.photo', {textImage, photoImage});
 
 // Для карточек из массива
-const cardsDone = new Section({ items: initialCards, renderer}, '.cards');
-cardsDone.renderElement(initialCards);
+const cardsSection = new Section({ items: initialCards, renderer}, '.cards');
+cardsSection.renderElements(initialCards);
 
 openButtonPopupAdd.addEventListener('click', addPopupCards);
 openButtonPopup.addEventListener('click', addPopup);
