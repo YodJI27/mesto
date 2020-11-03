@@ -25,7 +25,7 @@ const addFormSubmitHandler = () => {
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
-    validateCard.buttonActive(popupButtonSave);
+    validateCard.buttonActive();
     formPopup.open();
 }
 
@@ -34,14 +34,13 @@ const addPopup = () => {
     nameInput.value = editInfoUser.getUserInfo().name;
     jobInput.value = editInfoUser.getUserInfo().job;
     editPopupClass.open();
-    validateEdit.buttonFalse(popupButtonSaveButton);
+    validateEdit.buttonFalse();
 }
 
 // закрытие для редактирования
 popupEdit.addEventListener('click', (evt) => {
     if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){    
-        validateEdit.removeError(nameInput, inputErrorData);
-        validateEdit.removeError(jobInput, inputErrorName);
+        validateEdit.removeError();
         editPopupClass.close();
     }
 });
@@ -49,8 +48,7 @@ popupEdit.addEventListener('click', (evt) => {
 // закрытие для карточек
 popupCards.addEventListener('click', (evt) => {
     if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
-        validateCard.removeError(popupNameCards, inputNameError);
-        validateCard.removeError(popupJobCards, inputErrorUrl);
+        validateCard.removeError();
         formPopup.close();
     }
 });
