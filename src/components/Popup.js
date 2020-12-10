@@ -15,6 +15,7 @@ export class Popup {
 
     _handleEscClose(evt){
         if(evt.key === 'Escape'){
+            console.log("123");
             this.close();
         }
     }

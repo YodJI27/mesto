@@ -1,6 +1,7 @@
 const allClasesCase = {
     formSelector: '.popup__container',
     formSelectorCards: '.popup__container_cards_item',
+    formSelectorAvatar: '.popup__container_edit_avatar',
     popupText: '.popup__text',
     popupButton: '.popup__button',
     popupTextNameError: 'popup__text_name_error',
@@ -8,6 +9,7 @@ const allClasesCase = {
 };
 
 const popupEdit = document.querySelector('.popup');
+const deletePopup = document.querySelector('.delete__cards');
 const openButtonPopup = document.querySelector('.profile__edit_open_popup');
 const openButtonPopupAdd = document.querySelector('.profile__add');
 const nameInput = document.querySelector('.popup__text_name_input');
@@ -27,7 +29,14 @@ const inputErrorName = document.getElementById(`name-input-error`);
 const inputErrorData = document.getElementById(`job-input-error`);
 const inputNameError = document.getElementById('input-name-error');
 const inputErrorUrl = document.getElementById('url-input-error');
+const cardsTemplate = document.querySelector('.cards');
+const cardsLike = document.querySelector('.cards__like_count');
+const editAvatarSelector = document.querySelector('.popup__avatar');
+const profileAvatarButton = document.querySelector('.profile__avatar');
+const popupEditAvatarButton = document.querySelector('.popup__button_avatar_form');
+const profileImage = document.querySelector('.profile__image');
 
 export{photoCards, photoImage, textImage, nameAuthor, jobAuthor, inputErrorUrl, inputNameError,
     inputErrorData, inputErrorName, popupButtonSaveButton, popupButtonSave, popupJobCards, popupNameCards, 
-    popupCards, formElement, jobInput, nameInput,  openButtonPopupAdd, openButtonPopup, popupEdit, allClasesCase};
+    popupCards, formElement, jobInput, nameInput,  openButtonPopupAdd, openButtonPopup, popupEdit, allClasesCase, 
+    cardsTemplate,cardsLike,deletePopup, profileAvatarButton, editAvatarSelector, popupEditAvatarButton, profileImage};
