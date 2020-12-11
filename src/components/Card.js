@@ -4,11 +4,16 @@ export class Card {
         this._link = item.link;
         this._idUser = item.owner._id;
         this._idCards = item._id;
+        this._likeCards = item.likes.length;
+        this._likes = item.likes;
         this._template = template;
         this._handleCardClick = handleCardClick;
         this._deleteCardsPopup = deleteCards;
-        this._apiCardsDelete = apiCards;
-        this._apiUser = apiUser.getInfo().then((data) => {this.checkForId(data._id)});
+        this._apiCards = apiCards;
+        this._apiUser = apiUser.getInfo().then((data) => {
+            this.checkForId(data._id);
+            this._myLikes(data._id);
+        });
         this._editName = document.querySelector('.profile__author').textContent;
     }
 
@@ -24,23 +29,36 @@ export class Card {
             this._buttonDelete.classList.add('cards__delete_inactive');
         }
     }
-
-    // Cоздание и заполнение карточки
-    generateCard(){
-        this._element = this._getTemplate();
-        this._cardValue = this._element.querySelector('.cards__image');
-        this._buttonDelete = this._element.querySelector('.cards__delete');
-        this._setEventListener();
-
-        this._element.querySelector('.cards__text').textContent = this._name;
-        this._cardValue.src = this._link;
-        this._cardValue.alt = this._name;
-
-        return this._element;
+    // Изменение значения лайков
+    _likeCount(likes){
+        if(!likes.length){
+            this._cardsLike.textContent = "";
+        } else {
+            this._cardsLike.textContent = likes.length;
+        }
+    }
+    _myLikes(id){
+        this._likes.some(item => {
+            if(id === item._id){
+                this._likeButton.classList.add('cards__like_active');
+            }
+        })
     }
     // Лайк
     _clickLike (evt){
-        evt.target.classList.toggle('cards__like_active');
+        if(evt.target.classList.contains('cards__like_active')){
+            this._apiCards.deleteLikes(this._idCards)
+            .then((res) => {
+                evt.target.classList.remove('cards__like_active');
+                this._likeCount(res.likes);
+            })
+        } else {
+            this._apiCards.putLikes(this._idCards)
+            .then((res) => {
+                evt.target.classList.add('cards__like_active');
+                this._likeCount(res.likes);
+            })
+        }
     }   
     // Удаление карточки
     _deleteCards(){
@@ -50,7 +68,7 @@ export class Card {
     _deleteCardsFunction(){
         document.querySelector('.popup__delete_button').addEventListener('click', () => {
             this._deleteCards();
-            this._apiCardsDelete.deleteCards(this._idCards);
+            this._apiCards.deleteCards(this._idCards);
             this._deleteCardsPopup.close();
         })
     }
@@ -67,4 +85,22 @@ export class Card {
             this._handleCardClick();
         })
     }
+        // Cоздание и заполнение карточки
+        generateCard(){
+            this._element = this._getTemplate();
+            this._cardValue = this._element.querySelector('.cards__image');
+            this._buttonDelete = this._element.querySelector('.cards__delete');
+            this._cardsLike = this._element.querySelector('.cards__like_count');
+            this._likeButton = this._element.querySelector('.cards__like');
+            this._setEventListener();
+    
+            this._element.querySelector('.cards__text').textContent = this._name;
+            this._cardValue.src = this._link;
+            this._cardValue.alt = this._name;
+            this._cardsLike.textContent = this._likeCards;
+
+            this._myLikes();
+    
+            return this._element;
+        }
 }

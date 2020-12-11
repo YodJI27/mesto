@@ -39,4 +39,5 @@ const profileImage = document.querySelector('.profile__image');
 export{photoCards, photoImage, textImage, nameAuthor, jobAuthor, inputErrorUrl, inputNameError,
     inputErrorData, inputErrorName, popupButtonSaveButton, popupButtonSave, popupJobCards, popupNameCards, 
     popupCards, formElement, jobInput, nameInput,  openButtonPopupAdd, openButtonPopup, popupEdit, allClasesCase, 
-    cardsTemplate,cardsLike,deletePopup, profileAvatarButton, editAvatarSelector, popupEditAvatarButton, profileImage};
+    cardsTemplate,cardsLike,deletePopup, profileAvatarButton, editAvatarSelector, 
+    popupEditAvatarButton, profileImage};

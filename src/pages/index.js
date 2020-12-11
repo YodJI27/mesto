@@ -9,9 +9,9 @@ import {Api} from '../components/Api.js';
 import {photoCards,
         popupCards, jobInput, nameInput,
         openButtonPopupAdd, openButtonPopup, popupEdit, 
-        allClasesCase, textImage, photoImage, cardsTemplate, cardsLike, 
-        deletePopup, popupButtonSave, popupButtonSaveButton, 
-        profileAvatarButton, editAvatarSelector, popupEditAvatarButton, profileImage} from '../components/constants.js';
+        allClasesCase, textImage, photoImage, cardsTemplate, 
+        deletePopup, popupButtonSave, profileAvatarButton,
+        editAvatarSelector, popupEditAvatarButton, profileImage, popupButtonSaveButton} from '../components/constants.js';
 import { Popup } from '../components/Popup';
 
 // Редактирование информации о пользователе
@@ -30,24 +30,29 @@ const apiCards = new Api({
         "content-type": "application/json"
     }
 });
-// Для аватарки
-const avatarApi = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-17/users/me/avatar',
-    headers: {
-        "Authorization": "ef54f240-380e-482d-82be-6a3e691e6be6",
-        "content-type": "application/json"
-    } 
-})
 
 // Создание класса для редактирования профиля
 const editInfoUser = new UserInfo({nameSelector: '.profile__author', jobSelector: '.profile__description', avatarSelector: '.profile__image'});
 const editPopupClass = new PopupWithForm('.popup', () => {addFormSubmitHandler();});
 
-apiUser.getInfo()
-.then((data) => {
-    profileImage.src = data.avatar;
-    editInfoUser.setUserInfo(data.name, data.about);
+// Текст для кнопок
+const renderLoading = (loading, button, message) => {
+    if(loading) {
+        button.textContent = message;
+    } else {
+        button.textCotent = message;
+    }
+}
+
+const editApiUser = () => {
+    apiUser.getInfo()
+    .then((data) => {
+        profileImage.src = data.avatar;
+        editInfoUser.setUserInfo(data.name, data.about);
 })
+.catch((err) => {console.log(err)})
+};
+editApiUser();
 
 // Класс для попап удаление карточки
 const closeDeleteCardsPopup = new Popup('.delete__cards');
@@ -121,23 +126,17 @@ const rendererCards = (item) => {
         }   
     }, '#cards__template', closeDeleteCardsPopup, apiUser, apiCards);
 }
-// Текст для кнопок
-const renderLoading = (loading, button, message) => {
-    if(loading) {
-        button.textContent = message;
-    } else {
-        button.textCotent = message;
-    }
-}
+
 // Смена аватара
 const editAvatar = new PopupWithForm('.popup__avatar', (item) => {
     renderLoading(true, popupEditAvatarButton, 'Сохранение...')
-    avatarApi
+    apiUser
     .editAvatar(item.link)
     .then((data) => {
         profileImage.src = data.avatar;
     })
-    .finally(_ => renderLoading(true, popupEditAvatarButton, "Сохранить"));
+    .catch((err) => {console.log(err)})
+    .finally(_ => renderLoading(false, popupEditAvatarButton, "Сохранить"));
 });
 
 
@@ -151,6 +150,7 @@ const formPopup = new PopupWithForm('#cards__popup', (item) => {
         const cardsElement = card.generateCard();
         cardsTemplate.prepend(cardsElement);
     })
+    .catch((err) => {console.log(err)})
     .finally(_ => renderLoading(false, popupButtonSave, 'Cоздать'));
 });
 
