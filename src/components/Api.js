@@ -71,6 +71,7 @@ export class Api{
             headers: this._headers
         }).then(this._checkError);
     }
+    // Проверка на ошибки
     _checkError(res){
         if(res.ok){
             return res.json();

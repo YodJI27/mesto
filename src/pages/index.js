@@ -5,7 +5,7 @@ import { PopupWithForm } from '../components/PopupWithForm.js';
 import { PopupWithImage } from '../components/PopupWithImage.js';
 import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
-import {Api} from '../components/Api.js';
+import { Api } from '../components/Api.js';
 import {photoCards,
         popupCards, jobInput, nameInput,
         openButtonPopupAdd, openButtonPopup, popupEdit, 
@@ -40,19 +40,16 @@ const renderLoading = (loading, button, message) => {
     if(loading) {
         button.textContent = message;
     } else {
-        button.textCotent = message;
+        button.textContent = message;
     }
 }
 
-const editApiUser = () => {
-    apiUser.getInfo()
+apiUser.getInfo()
     .then((data) => {
         profileImage.src = data.avatar;
         editInfoUser.setUserInfo(data.name, data.about);
 })
-.catch((err) => {console.log(err)})
-};
-editApiUser();
+.catch((err) => {console.log(err)});
 
 // Класс для попап удаление карточки
 const closeDeleteCardsPopup = new Popup('.delete__cards');
