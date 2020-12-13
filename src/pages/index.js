@@ -33,7 +33,15 @@ const apiCards = new Api({
 
 // Создание класса для редактирования профиля
 const editInfoUser = new UserInfo({nameSelector: '.profile__author', jobSelector: '.profile__description', avatarSelector: '.profile__image'});
-const editPopupClass = new PopupWithForm('.popup', () => {addFormSubmitHandler();});
+// Форма редактирования профиля
+const editPopupClass = new PopupWithForm('.popup', () => {
+    editInfoUser.setUserInfo(nameInput.value, jobInput.value);
+    renderLoading(false, popupButtonSaveButton, "Cохранение...")
+    apiUser
+    .getEditInfo(nameInput.value, jobInput.value)
+    .finally(_ => renderLoading(false, popupButtonSaveButton, "Сохранить"));
+    editPopupClass.close();
+});
 
 // Текст для кнопок
 const renderLoading = (loading, button, message) => {
@@ -53,13 +61,6 @@ apiUser.getInfo()
 
 // Класс для попап удаление карточки
 const closeDeleteCardsPopup = new Popup('.delete__cards');
-
-// Заполнение формы для редактирования
-const addFormSubmitHandler = () => {
-    editInfoUser.setUserInfo(nameInput.value, jobInput.value);
-    apiUser.getEditInfo(nameInput.value, jobInput.value);
-    editPopupClass.close();
-}
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
@@ -92,7 +93,7 @@ deletePopup.addEventListener('click', (evt) => {
         closeDeleteCardsPopup.close();
     }
 })
-
+// закрытие попап редактирования аватара
 editAvatarSelector.addEventListener('click', (evt) => {
     if(evt.target.classList.contains('popup__avatar') || evt.target.classList.contains('popup__close_avatar')){
         editAvatar.close();
