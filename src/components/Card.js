@@ -1,5 +1,5 @@
 export class Card {
-    constructor({item, handleCardClick}, template, deleteCards, apiUser, apiCards){
+    constructor({item, handleCardClick}, template, deleteCards, api){
         this._name = item.name;
         this._link = item.link;
         this._idUser = item.owner._id;
@@ -9,11 +9,7 @@ export class Card {
         this._template = template;
         this._handleCardClick = handleCardClick;
         this._deleteCardsPopup = deleteCards;
-        this._apiCards = apiCards;
-        this._apiUser = apiUser.getInfo().then((data) => {
-            this.checkForId(data._id);
-            this._myLikes(data._id);
-        });
+        this._apiCards = api;
         this._editName = document.querySelector('.profile__author').textContent;
     }
 
@@ -37,7 +33,7 @@ export class Card {
             this._cardsLike.textContent = likes.length;
         }
     }
-    _myLikes(id){
+    myLikes(id){
         this._likes.some(item => {
             if(id === item._id){
                 this._likeButton.classList.add('cards__like_active');
@@ -98,8 +94,6 @@ export class Card {
             this._cardValue.src = this._link;
             this._cardValue.alt = this._name;
             this._cardsLike.textContent = this._likeCards;
-
-            this._myLikes();
     
             return this._element;
         }

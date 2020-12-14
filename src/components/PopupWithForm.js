@@ -1,4 +1,5 @@
 import {Popup} from './Popup.js';
+
 export class PopupWithForm extends Popup {
     constructor(popupSelector, handleFormSubmit){
         super(popupSelector);
@@ -17,8 +18,8 @@ export class PopupWithForm extends Popup {
         return this._case;
     }
     close(){
-        this._form.reset() ;
         super.close();
+        this._form.reset();
     }
 
     setEventListeners(){

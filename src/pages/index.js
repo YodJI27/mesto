@@ -6,30 +6,40 @@ import { PopupWithImage } from '../components/PopupWithImage.js';
 import { Section } from '../components/Section.js';
 import { UserInfo } from '../components/UserInfo.js';
 import { Api } from '../components/Api.js';
-import {photoCards,
-        popupCards, jobInput, nameInput,
-        openButtonPopupAdd, openButtonPopup, popupEdit, 
+import {
+        jobInput, nameInput,
+        openButtonPopupAdd, openButtonPopup, 
         allClasesCase, textImage, photoImage, cardsTemplate, 
-        deletePopup, popupButtonSave, profileAvatarButton,
-        editAvatarSelector, popupEditAvatarButton, profileImage, popupButtonSaveButton} from '../components/constants.js';
+        popupButtonSave, profileAvatarButton,
+        popupEditAvatarButton, profileImage, popupButtonSaveButton
+       } from '../components/constants.js';
 import { Popup } from '../components/Popup';
 
 // Редактирование информации о пользователе
-const apiUser = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-17/users/me', 
+const api = new Api({
+    url: 'https://mesto.nomoreparties.co/v1/cohort-17', 
     headers: {
         "Authorization": "ef54f240-380e-482d-82be-6a3e691e6be6",
         "content-type": "application/json"
     }    
 });
-// Для карточек
-const apiCards = new Api({
-    url: 'https://mesto.nomoreparties.co/v1/cohort-17/cards', 
-    headers: {
-        "Authorization": "ef54f240-380e-482d-82be-6a3e691e6be6",
-        "content-type": "application/json"
+
+// Отрисовка всех карточек
+Promise.all([
+    api.ReceiveCardsInServer(),
+    api.getInfo()
+])
+.then(([cards, user]) => {
+    const cardsSection = new Section({items: cards, renderer: (item) => {
+        rendererCards(item);
     }
-});
+     }, '.cards');
+    cardsSection.renderElements(cards);
+    profileImage.src = user.avatar;
+    editInfoUser.setUserInfo(user.name, user.about);
+})
+.catch((err) => {console.log(err)});
+
 
 // Создание класса для редактирования профиля
 const editInfoUser = new UserInfo({nameSelector: '.profile__author', jobSelector: '.profile__description', avatarSelector: '.profile__image'});
@@ -37,8 +47,8 @@ const editInfoUser = new UserInfo({nameSelector: '.profile__author', jobSelector
 const editPopupClass = new PopupWithForm('.popup', () => {
     editInfoUser.setUserInfo(nameInput.value, jobInput.value);
     renderLoading(false, popupButtonSaveButton, "Cохранение...")
-    apiUser
-    .getEditInfo(nameInput.value, jobInput.value)
+    api
+    .editInfoUser(nameInput.value, jobInput.value)
     .finally(_ => renderLoading(false, popupButtonSaveButton, "Сохранить"));
     editPopupClass.close();
 });
@@ -52,12 +62,7 @@ const renderLoading = (loading, button, message) => {
     }
 }
 
-apiUser.getInfo()
-    .then((data) => {
-        profileImage.src = data.avatar;
-        editInfoUser.setUserInfo(data.name, data.about);
-})
-.catch((err) => {console.log(err)});
+
 
 // Класс для попап удаление карточки
 const closeDeleteCardsPopup = new Popup('.delete__cards');
@@ -80,55 +85,25 @@ const addPopup = () => {
     validateEdit.buttonFalse();
 }
 
-// закрытие для редактирования
-popupEdit.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup') || evt.target.classList.contains('popup__close')){    
-        validateEdit.removeError();
-        editPopupClass.close();
-    }
-});
-// закрытие для попап удаление карточки
-deletePopup.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('delete__cards') || evt.target.classList.contains('popup__delete_close_button')){
-        closeDeleteCardsPopup.close();
-    }
-})
-// закрытие попап редактирования аватара
-editAvatarSelector.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup__avatar') || evt.target.classList.contains('popup__close_avatar')){
-        editAvatar.close();
-    }
-})
-
-
-// закрытие для карточек
-popupCards.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('popup_cards') || evt.target.classList.contains('popup__close_cards_item')){
-        validateCard.removeError();
-        formPopup.close();
-    }
-});
-
-// закрытие для фото
-photoCards.addEventListener('click', (evt) => {
-    if(evt.target.classList.contains('photo') || evt.target.classList.contains('photo__close')){
-        cardsImage.close();
-    }
-})
-
 // рендер одной карточки
 const rendererCards = (item) => {
-    return new Card({item, 
+    const card = new Card({item, 
         handleCardClick: () => {
                 cardsImage.open(item.name, item.link);
         }   
-    }, '#cards__template', closeDeleteCardsPopup, apiUser, apiCards);
+    }, '#cards__template', closeDeleteCardsPopup, api);
+    api.getInfo().then((res) => {
+        card.checkForId(res._id);
+        card.myLikes(res._id);
+    })
+    const cardsElement = card.generateCard();
+    cardsTemplate.prepend(cardsElement);
 }
 
 // Смена аватара
 const editAvatar = new PopupWithForm('.popup__avatar', (item) => {
     renderLoading(true, popupEditAvatarButton, 'Сохранение...')
-    apiUser
+    api
     .editAvatar(item.link)
     .then((data) => {
         profileImage.src = data.avatar;
@@ -137,33 +112,17 @@ const editAvatar = new PopupWithForm('.popup__avatar', (item) => {
     .finally(_ => renderLoading(false, popupEditAvatarButton, "Сохранить"));
 });
 
-
 // Добавление карточек из попап
 const formPopup = new PopupWithForm('#cards__popup', (item) => {
     renderLoading(true, popupButtonSave, 'Создание...');
-    apiCards
-    .getAddCards(item.name, item.link)
+    api
+    .upCardsToTheServer(item.name, item.link)
     .then((res) => {
-        const card  = rendererCards(res);
-        const cardsElement = card.generateCard();
-        cardsTemplate.prepend(cardsElement);
+        rendererCards(res);
     })
     .catch((err) => {console.log(err)})
     .finally(_ => renderLoading(false, popupButtonSave, 'Cоздать'));
 });
-
-// Отрисовка всех карточек
-apiCards.addCardsInServer().then((data) => {
-    const cardsSection = new Section({items: data, renderer: (item) => {
-       const card  = rendererCards(item);
-       card.checkForId;
-       const cardsElement = card.generateCard();
-       cardsSection.addItem(cardsElement);
-    }
-     }, '.cards');
-    cardsSection.renderElements(data);
-})
-
 // Приближение картинки
 const cardsImage = new PopupWithImage('.photo', {textImage, photoImage});
 
