@@ -12,7 +12,7 @@ export class Api{
         }).then(this._checkStatus);
     }
     // Добавление карточек с сервера
-    ReceiveCardsInServer(){
+    receiveCardsInServer(){
         return fetch(`${this._url}/cards`, {
             method: "GET",
             headers: this._headers

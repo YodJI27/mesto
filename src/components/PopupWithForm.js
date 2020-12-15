@@ -21,6 +21,10 @@ export class PopupWithForm extends Popup {
         super.close();
         this._form.reset();
     }
+    // Закрытие попапа подтверждения удаление карточки т.к. там не нужно сбрасывать форму поэтому только super.close()!
+    closeFormDeleteCards(){
+        super.close();
+    }
 
     setEventListeners(){
         this._popup.addEventListener('submit', () => {

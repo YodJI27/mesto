@@ -35,10 +35,11 @@ const editAvatarSelector = document.querySelector('.popup__avatar');
 const profileAvatarButton = document.querySelector('.profile__avatar');
 const popupEditAvatarButton = document.querySelector('.popup__button_avatar_form');
 const profileImage = document.querySelector('.profile__image');
+const popupDeleteButton = document.querySelectorAll('.popup__delete_button');
 const buttonEscape = 'Escape';
 
 export{photoCards, photoImage, textImage, nameAuthor, jobAuthor, inputErrorUrl, inputNameError,
     inputErrorData, inputErrorName, popupButtonSaveButton, popupButtonSave, popupJobCards, popupNameCards, 
     popupCards, formElement, jobInput, nameInput,  openButtonPopupAdd, openButtonPopup, popupEdit, allClasesCase, 
     cardsTemplate,cardsLike,deletePopup, profileAvatarButton, editAvatarSelector, 
-    popupEditAvatarButton, profileImage, buttonEscape};
+    popupEditAvatarButton, profileImage, buttonEscape, popupDeleteButton};

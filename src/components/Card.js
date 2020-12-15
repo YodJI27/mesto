@@ -1,15 +1,18 @@
+
+
 export class Card {
-    constructor({item, handleCardClick}, template, deleteCards, api){
+    constructor({item, handleCardClick, checkLikes, deletedCards}, template, deleteCards, api){
         this._name = item.name;
         this._link = item.link;
         this._idUser = item.owner._id;
-        this._idCards = item._id;
         this._likeCards = item.likes.length;
         this._likes = item.likes;
         this._template = template;
         this._handleCardClick = handleCardClick;
         this._deleteCardsPopup = deleteCards;
         this._apiCards = api;
+        this._cardDeleteApi =  deletedCards;
+        this._checkLikes = checkLikes;
         this._editName = document.querySelector('.profile__author').textContent;
     }
 
@@ -33,7 +36,7 @@ export class Card {
             this._cardsLike.textContent = likes.length;
         }
     }
-    myLikes(id){
+    checkMyLikes(id){
         this._likes.some(item => {
             if(id === item._id){
                 this._likeButton.classList.add('cards__like_active');
@@ -42,30 +45,18 @@ export class Card {
     }
     // Лайк
     _clickLike (evt){
-        if(evt.target.classList.contains('cards__like_active')){
-            this._apiCards.deleteLikes(this._idCards)
-            .then((res) => {
-                evt.target.classList.remove('cards__like_active');
-                this._likeCount(res.likes);
-            })
-        } else {
-            this._apiCards.putLikes(this._idCards)
-            .then((res) => {
-                evt.target.classList.add('cards__like_active');
-                this._likeCount(res.likes);
-            })
-        }
-    }   
+       this._checkLikes(evt);
+    }
+
     // Удаление карточки
     _deleteCards(){
         this._element.remove();
+        this._deleteCardsPopup.closeFormDeleteCards();
         this._element = null;
     }
     _deleteCardsFunction(){
         document.querySelector('.popup__delete_button').addEventListener('click', () => {
-            this._deleteCards();
-            this._apiCards.deleteCards(this._idCards);
-            this._deleteCardsPopup.close();
+            this._cardDeleteApi();
         })
     }
     // Добавление всех обработчиков карточки
