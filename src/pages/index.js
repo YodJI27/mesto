@@ -62,10 +62,8 @@ const renderLoading = (loading, button, message) => {
     }
 }
 
-
-
 // Класс для попап удаление карточки
-const closeDeleteCardsPopup = new Popup('.delete__cards');
+const closeDeleteCardsPopup = new PopupWithForm('.delete__cards', () => {closeDeleteCardsPopup.close()});
 
 // Открытие попап для добавления карточек
 const addPopupCards = () => {
