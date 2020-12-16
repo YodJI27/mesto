@@ -83,17 +83,18 @@ const addPopup = () => {
 }
 // Обработчик постановки лайков
 const checkLikesFunction = (evt, id, card) => {
-    if(evt.target.classList.contains('cards__like_active')){
+    const checkLike = card.checkCardsLikes(evt);
+    if(checkLike){
         api.deleteLikes(id)
         .then((res) => {
-            evt.target.classList.remove('cards__like_active');
+            card.deleteCardsClass(evt);
             card._likeCount(res.likes);
         })
         .catch((err) => {console.log(err)});
     } else {
        api.putLikes(id)
         .then((res) => {
-            evt.target.classList.add('cards__like_active');
+            card.addCardsClass(evt);
             card._likeCount(res.likes);
         })
         .catch((err) => {console.log(err)});

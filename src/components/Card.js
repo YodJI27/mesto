@@ -11,7 +11,7 @@ export class Card {
         this._handleCardClick = handleCardClick;
         this._deleteCardsPopup = deleteCards;
         this._apiCards = api;
-        this._cardDeleteApi =  deletedCards;
+        this._deletedCardApi =  deletedCards;
         this._checkLikes = checkLikes;
         this._editName = document.querySelector('.profile__author').textContent;
     }
@@ -36,6 +36,22 @@ export class Card {
             this._cardsLike.textContent = likes.length;
         }
     }
+    checkCardsLikes(evt) {
+        if(evt.target.classList.contains('cards__like_active')){
+            return true;
+        }
+        return false;
+    }
+    // Активация лайка
+    addCardsClass(evt) {
+        evt.target.classList.add('cards__like_active');
+    }
+    //Деактивация лайка
+    deleteCardsClass(evt){
+        evt.target.classList.remove('cards__like_active');
+    }
+
+    // Проверка на мои лайки
     checkMyLikes(id){
         this._likes.some(item => {
             if(id === item._id){
@@ -56,7 +72,7 @@ export class Card {
     }
     _deleteCardsFunction(){
         document.querySelector('.popup__delete_button').addEventListener('click', () => {
-            this._cardDeleteApi();
+            this._deletedCardApi();
         })
     }
     // Добавление всех обработчиков карточки
