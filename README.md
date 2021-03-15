@@ -36,5 +36,6 @@
  
 **Автор**  
 Илья Шнырев  
-Email: YodJI62@yandex.ru  
+Email: shnyrev.iilya@yandex.ru    
 Вконтакте: https://vk.com/shnerov  
+Habr: https://career.habr.com/yodji27 
